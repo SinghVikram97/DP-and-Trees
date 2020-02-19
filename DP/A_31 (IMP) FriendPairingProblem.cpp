@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define m 1000000007
-long long int help(int n)
+long long int help(int n, vector<long long int> &dp)
 {
 
   if (n <= 2)
@@ -10,19 +10,15 @@ long long int help(int n)
     return n;
   }
 
-  vector<long long int> dp(n + 2);
-  for (int i = 0; i <= n + 1; i++)
+  if (dp[n] != -1)
   {
-    if (i <= 2)
-      dp[i] = i;
-    else
-      dp[i] = -1;
+    return dp[n];
   }
 
-  for (int i = 3; i <= n; i++)
-  {
-    dp[i] = (dp[i - 1] + ((i - 1) * dp[i - 2]) % m) % m;
-  }
+  // Nth person can remain single --> f(n-1)
+  // Or can pair up with any (n-1) people --> (n-1)*f(n-2)
+  dp[n] = (help(n - 1, dp) + ((n - 1) * help(n - 2, dp)) % m) % m;
+
   return dp[n] % m;
 }
 int main()
@@ -35,6 +31,11 @@ int main()
 
     int n;
     cin >> n;
-    cout << help(n) << endl;
+    vector<long long int> dp(n + 2);
+    for (int i = 0; i <= n + 1; i++)
+    {
+      dp[i] = -1;
+    }
+    cout << help(n, dp) << endl;
   }
 }
