@@ -5,13 +5,13 @@ using namespace std;
 bool myComp(pair<int, int> &a, pair<int, int> &b)
 {
 
-  if (a.first < b.first)
+  if (a.first == b.first)
   {
-    return true;
+    return a.second < b.second;
   }
   else
   {
-    return a.second < b.second;
+    return a.first < b.first;
   }
 }
 int solve(vector<pair<int, int>> &northSouth, int n)
