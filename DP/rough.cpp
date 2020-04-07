@@ -1,10 +1,38 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-int main()
+class Solution
 {
-  vector<vector<int>> v;
-  v.push_back({0, 1});
-  v.push_back({2, 3});
-  cout << v.back()[1];
-}
+public:
+  void divide(int &num, int div)
+  {
+    while (num % div == 0)
+    {
+      num = num / div;
+    }
+  }
+
+  bool isUgly(int num)
+  {
+    if (num == 1)
+    {
+      return true;
+    }
+    if (num == 0)
+    {
+      return false;
+    }
+    divide(num, 2);
+    divide(num, 3);
+    divide(num, 5);
+
+    if (num == 1)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  int nthUglyNumber(int n)
+  {
+  }
+};
