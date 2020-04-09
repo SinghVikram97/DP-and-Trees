@@ -1,59 +1,58 @@
+// https://www.geeksforgeeks.org/number-subsequences-form-ai-bj-ck/
 #include <bits/stdc++.h>
 using namespace std;
-int help(int n, int k, vector<vector<int>> &dp)
+int help(string &s)
 {
 
-  if (k == 0)
+  int n = s.length();
+
+  // a represents possible no of subsequences ending with a (a^i) where i>=1 ex. a,aa,aaa etc.
+  int a = 0;
+  // b represents possible no of subsequences ending with ab (a^i b^j) where i>=1,j>=1 ex. ab,aab,abb etc.
+  int b = 0;
+  // c represents possible no of subsequences ending with ab (a^i b^j c^k) where i>=1,j>=1,k>=1 ex. abc,abbc,abcc,aabc etc.
+  int c = 0;
+
+  for (int i = 0; i < n; i++)
   {
-    return 0;
+
+    if (s[i] == 'a')
+    {
+      // Incoming a
+      // Can be joined with all existing subseqence ending with a so --> a possiblities more
+      // Or can be starting of a new a subsequqence --> 1
+      // And we have existing a as well (if we don't consider this incoming a) --> a
+      // So a=(a)+(a+1)
+      // a=(2*a)+1
+      a = (2 * a) + 1;
+    }
+    else if (s[i] == 'b')
+    {
+      // Incoming b
+      // Can be joined with all existing subsequnce starting with a and ending with b (abb)--> b possibilites
+      // Or can be taken as a new b and can be joined with existing subsequences ending with a --> a possibilties
+      // And we have existing subsequences as well --> b
+      // So b=(b)+(b+a)
+      // b=(2*b)+a
+      b = (2 * b) + a;
+    }
+    else if (s[i] == 'c')
+    {
+      // Incoming c
+      // Can be joined with all existing subsequnce starting with a, having b inbetween and ending with c (abbcc)--> c possibilites
+      // Or can be taken as a new c and can be joined with existing subsequences ending with b and starting with a --> b possibilties
+      // And we have existing subsequences as well --> c
+      // (Can't be joined with a as we need a inbetween)
+      // So c=(c)+(c+b)
+      // c=(2*c)+b
+      c = (2 * c) + b;
+    }
   }
-
-  if (k == 1)
-  {
-    return 1;
-  }
-
-  if (n == 0)
-  {
-    return 0;
-  }
-
-  if (k == n)
-  {
-    return 1;
-  }
-
-  if (k > n)
-  {
-    return 0;
-  }
-
-  if (dp[n][k] != -1)
-  {
-    return dp[n][k];
-  }
-
-  /// Let (n)th number is to be inserted in k distinct set
-  /// Either (n)th number can form its own single number set
-  /// So f(n-1,k-1) (k-1 sets formed by n-1 elements and 1 by nth element)
-  // Or it can be inserted into any existing k sets
-  // so k*f(n-1,k)  (K sets formed by n-1 elements and add nth in any one)
-
-  dp[n][k] = help(n - 1, k - 1, dp) + (k * help(n - 1, k, dp));
-  return dp[n][k];
+  return c;
 }
 int main()
 {
-
-  int n, k;
-  cin >> n >> k;
-  vector<vector<int>> dp(n + 5, vector<int>(k + 5));
-  for (int i = 0; i <= n; i++)
-  {
-    for (int j = 0; j <= k; j++)
-    {
-      dp[i][j] = -1;
-    }
-  }
-  cout << help(n, k, dp) << endl;
+  string s;
+  cin >> s;
+  cout << help(s) << endl;
 }
