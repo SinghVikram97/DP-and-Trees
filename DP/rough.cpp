@@ -23,11 +23,11 @@ int help(vector<int> &v, int i, int j, vector<vector<int>> &dp)
     return dp[i][j];
   }
 
-  int operations = INT_MAX - 5;
+  int operations = -1;
   for (int k = i + 1; k < j; k++)
   {
 
-    operations = min(operations, help(v, i, k, dp) + help(v, k, j, dp) + (v[i] * v[k] * v[j]));
+    operations = max(operations, help(v, i, k, dp) + help(v, k, j, dp) + (v[i] * v[k] * v[j]));
   }
   dp[i][j] = operations;
   return dp[i][j];
