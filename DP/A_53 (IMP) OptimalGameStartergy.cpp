@@ -1,4 +1,6 @@
 // https://practice.geeksforgeeks.org/problems/optimal-strategy-for-a-game/0
+// greedy doesn't work
+// 8 15 3 7
 #include <bits/stdc++.h>
 using namespace std;
 int help(vector<int> &v, int i, int j, vector<vector<int>> &dp)
