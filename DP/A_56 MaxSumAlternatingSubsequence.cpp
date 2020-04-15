@@ -1,3 +1,4 @@
+// https://www.geeksforgeeks.org/maximum-sum-alternating-subsequence-sum/
 //  Same as previous just store sum instead of length
 // -1,0,1 doesn't work in this case
 // ex. 8 2 7 10
