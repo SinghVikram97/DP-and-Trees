@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 // Same as coin change/combination sum with infinite supply of each coefficient to make target sum=rhs
+// Apply dp here
 int help(vector<int> &coeff, int i, int rhs)
 {
 
