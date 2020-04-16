@@ -1,49 +1,44 @@
-#include <bits/stdc++.h>
-using namespace std;
-// Same as coin change/combination sum with infinite supply of each coefficient to make target sum=rhs
-int help(vector<int> &coeff, int i, int rhs)
-{
+class Solution {
+public:
+    
+    
+    bool help(string s,vector<string> &wordDict,int start){
+        
+        
+        if(start==s.length()){
+            return true;
+        }
+        
+        
+        if(start>s.length()){
+            return false;
+        }
+        
+        // At each point match the string starting with startIndex with every word in wordDict
+        
+        for(int i=0;i<wordDict.size();i++){
+            
+            auto it=s.find(wordDict[i],start);
+            
+            if(it!=string::npos && it==start){
+                
+                if(help(s,wordDict,start+wordDict[i].length())){
+                    return true;
+                }
+                else{
+                    continue;
+                }
+                
+            }
+        }
+        
+        return false;
 
-  if (rhs == 0)
-  {
-    return 1;
-  }
-
-  if (rhs < 0)
-  {
-    return 0;
-  }
-
-  if (i >= coeff.size())
-  {
-    return 0;
-  }
-
-  // Can take or not take
-  int ans = 0;
-
-  // take
-  ans = ans + help(coeff, i, rhs - coeff[i]);
-
-  // don't take
-  ans = ans + help(coeff, i + 1, rhs);
-
-  return ans;
-}
-int main()
-{
-
-  int n;
-  cin >> n;
-
-  vector<int> coeff(n);
-  for (int i = 0; i < n; i++)
-  {
-    cin >> coeff[i];
-  }
-
-  int rhs;
-  cin >> rhs;
-
-  cout << help(coeff, 0, rhs) << endl;
-}
+    }
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        
+        return help(s,wordDict,0);
+        
+    }
+};
